@@ -43,6 +43,10 @@ jobs:
               cd $GITHUB_WORKSPACE/opt/rt-n56u/toolchain-mipsel
               sh dl_toolchain.sh
 
+        - name: 更新xxxxx.config
+          run: |              
+           [ -e $CONFIG_FILE ] && mv $CONFIG_FILE $GITHUB_WORKSPACE/opt/rt-n56u/trunk/configs/templates/
+
         - name: 编译固件
           run: |
               cd $GITHUB_WORKSPACE/opt/rt-n56u/trunk
@@ -51,12 +55,12 @@ jobs:
         - name: 7z打包
           if: env.pack7z == 'true'    
           run: |
-             7z a -r $REPO_OS-$model-by jczhl.7z $GITHUB_WORKSPACE/trunk/images/*
+             7z a -r $REPO_OS-$model-by jczhl.7z $GITHUB_WORKSPACE/opt/rt-n56u/trunk/images/*
             
         - name: zip 打包
           if: env.zip == 'true'
           run: |
-            zip -r $REPO_OS-$model-by jczhl.zip $GITHUB_WORKSPACE/trunk/images/*
+            zip -r $REPO_OS-$model-by jczhl.zip $GITHUB_WORKSPACE/opt/rt-n56u/trunk/images/*
             if [[ $(du -sb $REPO_OS-$model-by jczhl.zip | awk '{print $1}') -gt 2097152000 ]];then
                   echo -e "split packaging..."
                   tar -cpzf - $REPO_OS-$model-by jczhl.zip | split -d -b 1024m - $REPO_OS-$model-by jczhl.zip
