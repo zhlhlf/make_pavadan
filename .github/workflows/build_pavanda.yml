@@ -43,11 +43,6 @@ jobs:
               cd $GITHUB_WORKSPACE/opt/rt-n56u/toolchain-mipsel
               sh dl_toolchain.sh
 
-        - name: 更新xxxxx.config
-          run: |              
-           [ -e $CONFIG_FILE ] && mv $CONFIG_FILE $GITHUB_WORKSPACE/opt/rt-n56u/trunk/configs/templates/
-
-
         - name: 编译固件
           run: |
               cd $GITHUB_WORKSPACE/opt/rt-n56u/trunk
