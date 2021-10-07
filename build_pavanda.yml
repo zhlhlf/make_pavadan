@@ -1,4 +1,4 @@
-name: build_pavanda
+name: Build OpenWrt
 
 on:
 #  release:
@@ -44,8 +44,8 @@ jobs:
         	texinfo build-essential help2man pkg-config zlib1g-dev libgmp3-dev \
         	libmpc-dev libmpfr-dev libncurses5-dev libltdl-dev wget libc-dev-bin
         git clone --depth=1 https://github.com/hanwckf/rt-n56u.git /opt/rt-n56u
-        cd /opt/rt-n56u/toolchain-mipsel
+        cd $GITHUB_WORKSPACE/opt/rt-n56u/toolchain-mipsel
         sh dl_toolchain.sh
-        cd /opt/rt-n56u/trunk
+        cd $GITHUB_WORKSPACE/opt/rt-n56u/trunk
         fakeroot ./build_firmware_modify PSG1218  # 脚本第一个参数为路由型号，在trunk/configs/templates/中    # 编译好的固件在trunk/images里
         ls
