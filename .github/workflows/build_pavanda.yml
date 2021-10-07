@@ -14,8 +14,8 @@ env:
   CONFIG_FILE: PSG1218.config
   model: PSG1218
   TZ: Asia/Shanghai
-  wetransfer: true
-  release: false
+  wetransfer: false
+  release: true
   pack7z: false
   zip: true
 
@@ -42,10 +42,6 @@ jobs:
               git clone --depth=1 $REPO_URL opt/rt-n56u
               cd $GITHUB_WORKSPACE/opt/rt-n56u/toolchain-mipsel
               sh dl_toolchain.sh
-
-        - name: 更新xxxxx.config
-          run: |              
-           [ -e $CONFIG_FILE ] && mv $CONFIG_FILE $GITHUB_WORKSPACE/opt/rt-n56u/trunk/configs/templates/
 
         - name: 编译固件
           run: |
