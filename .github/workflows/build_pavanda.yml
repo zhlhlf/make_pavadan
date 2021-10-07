@@ -14,8 +14,8 @@ env:
   CONFIG_FILE: PSG1218.config
   model: PSG1218
   TZ: Asia/Shanghai
-  wetransfer: true
-  release: false
+  wetransfer: false
+  release: true
   pack7z: true
   zip: false
 
@@ -78,7 +78,7 @@ jobs:
           uses: ncipollo/release-action@v1.8.6
           with:
              artifacts: zhlhlf/*
-             name: pavanda--b- jczhl
+             name: pavanda--by-jczhl
              tag: pavanda-${{ github.run_number }}
              token: ${{ secrets.GITHUB_TOKEN }}
 
