@@ -1,0 +1,51 @@
+name: build_pavanda
+
+on:
+#  release:
+#    types: [published]
+#  push:
+#    branches:
+#      - 
+#    paths:
+#      - '.config'
+#  schedule:
+#    - cron: 0 8 * * 5
+  watch:
+    types: [started]
+
+env:
+  REPO_URL: https://github.com/hanwckf/rt-n56u
+  REPO_BRANCH: master
+  FEEDS_CONF: feeds.conf.default
+  CONFIG_FILE: .config
+  DIY_P1_SH: diy-part1.sh
+  DIY_P2_SH: diy-part2.sh
+  UPLOAD_BIN_DIR: false
+  UPLOAD_FIRMWARE: true
+  UPLOAD_COWTRANSFER: false
+  UPLOAD_WETRANSFER: false
+  UPLOAD_RELEASE: true
+  TZ: Asia/Shanghai
+  ssh: false
+
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@main
+
+    - name: Initialization environment
+      run: |
+        sudo apt update
+        sudo apt install unzip libtool-bin curl cmake gperf gawk flex bison nano xxd \
+        	fakeroot kmod cpio git python3-docutils gettext automake autopoint \
+        	texinfo build-essential help2man pkg-config zlib1g-dev libgmp3-dev \
+        	libmpc-dev libmpfr-dev libncurses5-dev libltdl-dev wget libc-dev-bin
+        git clone --depth=1 https://github.com/hanwckf/rt-n56u.git /opt/rt-n56u
+        cd /opt/rt-n56u/toolchain-mipsel
+        sh dl_toolchain.sh
+        cd /opt/rt-n56u/trunk
+        fakeroot ./build_firmware_modify PSG1218  # 脚本第一个参数为路由型号，在trunk/configs/templates/中    # 编译好的固件在trunk/images里
+        ls
