@@ -46,7 +46,7 @@ jobs:
 
         - name: 更新xxxxx.config
           run: |              
-        [ -e $CONFIG_FILE ] && mv $CONFIG_FILE $GITHUB_WORKSPACE/opt/rt-n56u/trunk/configs/templates/
+           [ -e $CONFIG_FILE ] && mv $CONFIG_FILE $GITHUB_WORKSPACE/opt/rt-n56u/trunk/configs/templates/
 
 
         - name: 编译固件
