@@ -16,8 +16,8 @@ env:
   TZ: Asia/Shanghai
   wetransfer: true
   release: false
-  pack7z: false
-  zip: true
+  pack7z: true
+  zip: false
 
 
 jobs:
