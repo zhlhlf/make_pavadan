@@ -1,4 +1,4 @@
-name: build_pavanda
+name: build_pavadan
 
 on:
   watch:
