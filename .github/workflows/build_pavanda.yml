@@ -42,7 +42,6 @@ jobs:
               git clone --depth=1 $REPO_URL opt/rt-n56u
               cd $GITHUB_WORKSPACE/opt/rt-n56u/toolchain-mipsel
               sh dl_toolchain.sh
-              cd $GITHUB_WORKSPACE/opt/rt-n56u/trunk
 
         - name: 更新xxxxx.config
           run: |              
@@ -51,7 +50,8 @@ jobs:
 
         - name: 编译固件
           run: |
-              fakeroot ./build_firmware_modify PSG1218  # 脚本第一个参数为路由型号，在trunk/configs/templates/中    # 编译好的固件在trunk/images里
+              cd $GITHUB_WORKSPACE/opt/rt-n56u/trunk
+              fakeroot ./build_firmware_modify $model  # 脚本第一个参数为路由型号，在trunk/configs/templates/中    # 编译好的固件在trunk/images里
              
         - name: 7z打包
           if: env.pack7z == 'true'    
