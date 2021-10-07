@@ -1,52 +1,87 @@
 name: build_pavanda
 
 on:
-#  release:
-#    types: [published]
-#  push:
-#    branches:
-#      - 
-#    paths:
-#      - '.config'
-#  schedule:
-#    - cron: 0 8 * * 5
   watch:
     types: [started]
-
+#  push:
+#    branches: [ master ]
+#  pull_request:
+#    branches: [ master ]
+   
 env:
   REPO_URL: https://github.com/hanwckf/rt-n56u
-  REPO_BRANCH: master
-  FEEDS_CONF: feeds.conf.default
-  CONFIG_FILE: .config
-  DIY_P1_SH: diy-part1.sh
-  DIY_P2_SH: diy-part2.sh
-  UPLOAD_BIN_DIR: false
-  UPLOAD_FIRMWARE: true
-  UPLOAD_COWTRANSFER: false
-  UPLOAD_WETRANSFER: false
-  UPLOAD_RELEASE: true
+  REPO_OS: pavanda
+  CONFIG_FILE: PSG1218.config
+  model: PSG1218
   TZ: Asia/Shanghai
-  ssh: false
+  wetransfer: true
+  release: false
+  pack7z: false
+  zip: true
+
 
 jobs:
-  build:
-    runs-on: ubuntu-20.04
+    build:
+      runs-on: ubuntu-20.04
 
-    steps:
-    - name: Checkout
-      uses: actions/checkout@main
+      steps:
+        - name: 获取本仓库源码
+          uses: actions/checkout@main
+  
+        - name: 清理＆配置环境
+          run: |
+            docker rmi `docker images -q`
+            sudo apt update
+            sudo apt install unzip libtool-bin curl cmake gperf gawk flex bison nano xxd \
+            	fakeroot kmod cpio git python3-docutils gettext automake autopoint \
+            	texinfo build-essential help2man pkg-config zlib1g-dev libgmp3-dev \
+            	libmpc-dev libmpfr-dev libncurses5-dev libltdl-dev wget libc-dev-bin
+          
+        - name: 获取源码
+          run: |
+              git clone --depth=1 $REPO_URL opt/rt-n56u
+              cd $GITHUB_WORKSPACE/opt/rt-n56u/toolchain-mipsel
+              sh dl_toolchain.sh
+              cd $GITHUB_WORKSPACE/opt/rt-n56u/trunk
 
-    - name: Initialization environment
-      run: |
-        sudo apt update
-        sudo apt install unzip libtool-bin curl cmake gperf gawk flex bison nano xxd \
-        	fakeroot kmod cpio git python3-docutils gettext automake autopoint \
-        	texinfo build-essential help2man pkg-config zlib1g-dev libgmp3-dev \
-        	libmpc-dev libmpfr-dev libncurses5-dev libltdl-dev wget libc-dev-bin
-        git clone --depth=1 https://github.com/hanwckf/rt-n56u.git opt/rt-n56u
-        ls
-        cd $GITHUB_WORKSPACE/opt/rt-n56u/toolchain-mipsel
-        sh dl_toolchain.sh
-        cd $GITHUB_WORKSPACE/opt/rt-n56u/trunk
-        fakeroot ./build_firmware_modify PSG1218  # 脚本第一个参数为路由型号，在trunk/configs/templates/中    # 编译好的固件在trunk/images里
-        ls
+        - name: 更新xxxxx.config
+          run: |              
+        [ -e $CONFIG_FILE ] && mv $CONFIG_FILE $GITHUB_WORKSPACE/opt/rt-n56u/trunk/configs/templates/
+
+
+        - name: 编译固件
+          run: |
+              fakeroot ./build_firmware_modify $model  # 脚本第一个参数为路由型号，在trunk/configs/templates/中    # 编译好的固件在trunk/images里
+             
+        - name: 7z打包
+          if: env.pack7z == 'true'    
+          run: |
+             7z a -r $REPO_OS-$model-by jczhl.7z $GITHUB_WORKSPACE/trunk/images/*
+            
+        - name: zip 打包
+          if: env.zip == 'true'
+          run: |
+            zip -r $REPO_OS-$model-by jczhl.zip $GITHUB_WORKSPACE/trunk/images/*
+            if [[ $(du -sb $REPO_OS-$model-by jczhl.zip | awk '{print $1}') -gt 2097152000 ]];then
+                  echo -e "split packaging..."
+                  tar -cpzf - $REPO_OS-$model-by jczhl.zip | split -d -b 1024m - $REPO_OS-$model-by jczhl.zip
+              fi
+
+        - name: 移动生成包至zhlhlf目录
+          run: |
+           mv $REPO_OS-$model-by jczhl.* zhlhlf
+                              
+        - name: 上传zhlhlf目录所有文件至WeTransfer
+          if: env.wetransfer == 'true'      
+          run: |
+             sudo ./transfer wet zhlhlf/*
+
+        - name: 上传zhlhlf目录所有文件至 release
+          if: env.release == 'true'      
+          uses: ncipollo/release-action@v1.8.6
+          with:
+             artifacts: zhlhlf/*
+             name: pavanda--by jczhl
+             tag: pavanda-${{ github.run_number }}
+             token: ${{ secrets.GITHUB_TOKEN }}
+
