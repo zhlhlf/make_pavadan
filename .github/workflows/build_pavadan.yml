@@ -18,6 +18,7 @@ env:
   release: true
   pack7z: true
   zip: false
+  replace: trure
 
 
 jobs:
@@ -45,14 +46,20 @@ jobs:
               cd $GITHUB_WORKSPACE/opt/rt-n56u/toolchain-mipsel
               sh dl_toolchain.sh
 
+        - name: 替换config
+          if: env.replace == 'true'        
+          run: |
+              rm -rf opt/rt-n56u/trunk/configs/templates/$CONFIG_FILE
+              [ -e $CONFIG_FILE ] && mv $CONFIG_FILE opt/rt-n56u/trunk/configs/templates/
+        
         - name: 编译固件
           run: |
               cd $GITHUB_WORKSPACE/opt/rt-n56u/trunk
               fakeroot ./build_firmware_modify $model  # 脚本第一个参数为路由型号，在trunk/configs/templates/中    # 编译好的固件在trunk/images里
              
         - name: 7z打包
-          if: env.pack7z == 'true'    
-          run: |
+          if: env.release == 'true'      
+                    run: |
              7z a -r $REPO_OS-$model-by-jczhl.7z $GITHUB_WORKSPACE/opt/rt-n56u/trunk/images/*
             
         - name: zip 打包
