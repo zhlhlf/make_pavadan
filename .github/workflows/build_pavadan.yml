@@ -59,7 +59,7 @@ jobs:
              
         - name: 7z打包
           if: env.release == 'true'      
-                    run: |
+          run: |
              7z a -r $REPO_OS-$model-by-jczhl.7z $GITHUB_WORKSPACE/opt/rt-n56u/trunk/images/*
             
         - name: zip 打包
