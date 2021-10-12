@@ -9,16 +9,16 @@ on:
 #    branches: [ master ]
    
 env:
-  REPO_URL: https://github.com/hanwckf/rt-n56u
-  REPO_OS: pavanda
-  CONFIG_FILE: PSG1218.config
+  repo_url: https://github.com/hanwckf/rt-n56u
+  repo_os: pavanda
+  config: PSG1218.config
   model: PSG1218
   TZ: Asia/Shanghai
   wetransfer: false
   release: true
   pack7z: true
   zip: false
-  replace: true
+  replace: trure
 
 
 jobs:
@@ -40,17 +40,18 @@ jobs:
           
         - name: 获取源码
           run: |
-              mkdir zhlhlf
-              curl -sL https://git.io/file-transfer | sh
-              git clone --depth=1 $REPO_URL opt/rt-n56u
+              ls
+              git clone --depth=1 $repo_url opt/rt-n56u
               cd $GITHUB_WORKSPACE/opt/rt-n56u/toolchain-mipsel
               sh dl_toolchain.sh
 
         - name: 替换config
           if: env.replace == 'true'        
           run: |
-              rm -rf opt/rt-n56u/trunk/configs/templates/$CONFIG_FILE
-              [ -e $CONFIG_FILE ] && mv $CONFIG_FILE opt/rt-n56u/trunk/configs/templates/
+              rm -rf opt/rt-n56u/trunk/configs/templates/$config
+              ls opt/rt-n56u/trunk/configs/templates
+              [ -e $config ] && mv $config opt/rt-n56u/trunk/configs/templates/$config
+              ls opt/rt-n56u/trunk/configs/templates
         
         - name: 编译固件
           run: |
@@ -59,25 +60,27 @@ jobs:
              
         - name: 7z打包
           if: env.release == 'true'      
-          run: |
-             7z a -r $REPO_OS-$model-by-jczhl.7z $GITHUB_WORKSPACE/opt/rt-n56u/trunk/images/*
+                    run: |
+             7z a -r $repo_os-$model-by-jczhl.7z $GITHUB_WORKSPACE/opt/rt-n56u/trunk/images/*
             
         - name: zip 打包
           if: env.zip == 'true'
           run: |
-            zip -r $REPO_OS-$model-by-jczhl.zip $GITHUB_WORKSPACE/opt/rt-n56u/trunk/images/*
-            if [[ $(du -sb $REPO_OS-$model-by-jczhl.zip | awk '{print $1}') -gt 2097152000 ]];then
+            zip -r $repo_os-$model-by-jczhl.zip $GITHUB_WORKSPACE/opt/rt-n56u/trunk/images/*
+            if [[ $(du -sb $repo_os-$model-by-jczhl.zip | awk '{print $1}') -gt 2097152000 ]];then
                   echo -e "split packaging..."
-                  tar -cpzf - $REPO_OS-$model-by-jczhl.zip | split -d -b 1024m - $REPO_OS-$model-by-jczhl.zip
+                  tar -cpzf - $repo_os-$model-by-jczhl.zip | split -d -b 1024m - $repo_os-$model-by-jczhl.zip
               fi
 
         - name: 移动生成包至zhlhlf目录
           run: |
-           mv $REPO_OS-$model-by-jczhl.* zhlhlf
+           mkdir zhlhlf          
+           mv $repo_os-$model-by-jczhl.* zhlhlf
                               
         - name: 上传zhlhlf目录所有文件至WeTransfer
           if: env.wetransfer == 'true'      
           run: |
+             curl -sL https://git.io/file-transfer | sh          
              sudo ./transfer wet zhlhlf/*
 
         - name: 上传zhlhlf目录所有文件至 release
