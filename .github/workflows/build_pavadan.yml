@@ -48,47 +48,24 @@ jobs:
         - name: 替换config
           if: env.replace == 'true'        
           run: |
-              rm -rf $GITHUB_WORKSPACE/opt/rt-n56u/trunk/configs/templates/$config
-              ls $GITHUB_WORKSPACE/opt/rt-n56u/trunk/configs/templates
-              mv $GITHUB_WORKSPACE/$config $GITHUB_WORKSPACE/opt/rt-n56u/trunk/configs/templates/$config
-              ls $GITHUB_WORKSPACE/opt/rt-n56u/trunk/configs/templates
-        
+#              rm -rf $GITHUB_WORKSPACE/opt/rt-n56u/trunk/configs/templates/$config
+ #             ls $GITHUB_WORKSPACE/opt/rt-n56u/trunk/configs/templates
+  #            mv $GITHUB_WORKSPACE/$config $GITHUB_WORKSPACE/opt/rt-n56u/trunk/configs/templates/$config
+   #           ls $GITHUB_WORKSPACE/opt/rt-n56u/trunk/configs/templates
+              mv $GITHUB_WORKSPACE/opt/rt-n56u/trunk/configs/templates/$config $GITHUB_WORKSPACE/opt/rt-n56u/trunk/.config
         - name: 编译固件
           run: |
               cd $GITHUB_WORKSPACE/opt/rt-n56u/trunk
               fakeroot ./build_firmware_modify $model  # 脚本第一个参数为路由型号，在trunk/configs/templates/中    # 编译好的固件在trunk/images里
              
-        - name: 7z打包
-          if: env.release == 'true'      
+        - name: 移动生成至zhlhlf目录
           run: |
-             7z a -r $repo_os-$model-by-jczhl.7z $GITHUB_WORKSPACE/opt/rt-n56u/trunk/images/*
-            
-        - name: zip 打包
-          if: env.zip == 'true'
-          run: |
-            zip -r $repo_os-$model-by-jczhl.zip $GITHUB_WORKSPACE/opt/rt-n56u/trunk/images/*
-            if [[ $(du -sb $repo_os-$model-by-jczhl.zip | awk '{print $1}') -gt 2097152000 ]];then
-                  echo -e "split packaging..."
-                  tar -cpzf - $repo_os-$model-by-jczhl.zip | split -d -b 1024m - $repo_os-$model-by-jczhl.zip
-              fi
-
-        - name: 移动生成包至zhlhlf目录
-          run: |
-           mkdir zhlhlf          
-           mv $repo_os-$model-by-jczhl.* zhlhlf
+           mkdir zhlhlf
+           rm -rf zhlhlf/*           
+           mv $GITHUB_WORKSPACE/opt/rt-n56u/trunk/images/*.trx zhlhlf         
                               
-        - name: 上传zhlhlf目录所有文件至WeTransfer
-          if: env.wetransfer == 'true'      
-          run: |
-             curl -sL https://git.io/file-transfer | sh          
-             sudo ./transfer wet zhlhlf/*
-
-        - name: 上传zhlhlf目录所有文件至 release
-          if: env.release == 'true'      
-          uses: ncipollo/release-action@v1.8.6
-          with:
-             artifacts: zhlhlf/*
-             name: pavanda--by-jczhl
-             tag: pavanda-${{ github.run_number }}
-             token: ${{ secrets.GITHUB_TOKEN }}
-
+       - name: Upload artifact
+         uses: actions/upload-artifact@master
+         with:
+           name: OpenWrt phicomm k2
+           path: zhlhlf/
