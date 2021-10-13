@@ -18,7 +18,7 @@ env:
   release: true
   pack7z: true
   zip: false
-  replace: trure
+  replace: true
 
 
 jobs:
