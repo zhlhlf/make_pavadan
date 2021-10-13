@@ -18,7 +18,7 @@ env:
   release: true
   pack7z: true
   zip: false
-  replace: true
+  replace: trure
 
 
 jobs:
@@ -48,10 +48,10 @@ jobs:
         - name: 替换config
           if: env.replace == 'true'        
           run: |
-              rm -rf opt/rt-n56u/trunk/configs/templates/$config
-              ls opt/rt-n56u/trunk/configs/templates
-              [ -e $config ] && mv $config opt/rt-n56u/trunk/configs/templates/$config
-              ls opt/rt-n56u/trunk/configs/templates
+              rm -rf $GITHUB_WORKSPACE/opt/rt-n56u/trunk/configs/templates/$config
+              ls $GITHUB_WORKSPACE/opt/rt-n56u/trunk/configs/templates
+              mv $GITHUB_WORKSPACE/$config $GITHUB_WORKSPACE/opt/rt-n56u/trunk/configs/templates/$config
+              ls $GITHUB_WORKSPACE/opt/rt-n56u/trunk/configs/templates
         
         - name: 编译固件
           run: |
@@ -60,7 +60,7 @@ jobs:
              
         - name: 7z打包
           if: env.release == 'true'      
-          run: |
+                    run: |
              7z a -r $repo_os-$model-by-jczhl.7z $GITHUB_WORKSPACE/opt/rt-n56u/trunk/images/*
             
         - name: zip 打包
