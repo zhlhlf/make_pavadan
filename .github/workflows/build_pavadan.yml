@@ -52,7 +52,7 @@ jobs:
  #             ls $GITHUB_WORKSPACE/opt/rt-n56u/trunk/configs/templates
   #            mv $GITHUB_WORKSPACE/$config $GITHUB_WORKSPACE/opt/rt-n56u/trunk/configs/templates/$config
    #           ls $GITHUB_WORKSPACE/opt/rt-n56u/trunk/configs/templates
-              mv $GITHUB_WORKSPACE/opt/rt-n56u/trunk/configs/templates/$config $GITHUB_WORKSPACE/opt/rt-n56u/trunk/.config
+               mv $GITHUB_WORKSPACE/opt/rt-n56u/trunk/configs/templates/$config $GITHUB_WORKSPACE/opt/rt-n56u/trunk/.config
         - name: 编译固件
           run: |
               cd $GITHUB_WORKSPACE/opt/rt-n56u/trunk
