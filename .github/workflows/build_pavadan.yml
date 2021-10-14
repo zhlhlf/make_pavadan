@@ -65,5 +65,5 @@ jobs:
         - name: Upload artifact
           uses: actions/upload-artifact@master
           with:
-           name: OpenWrt phicomm k2
+           name: pavadan phicomm k2
            path: zhlhlf/
