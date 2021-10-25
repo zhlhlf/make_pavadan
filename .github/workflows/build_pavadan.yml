@@ -51,6 +51,7 @@ jobs:
               rm -rf $GITHUB_WORKSPACE/opt/rt-n56u/trunk/configs/templates/$config
               mv $GITHUB_WORKSPACE/$config $GITHUB_WORKSPACE/opt/rt-n56u/trunk/configs/templates/$config
               ls $GITHUB_WORKSPACE/opt/rt-n56u/trunk/configs/templates/
+              chmod 777 $GITHUB_WORKSPACE/opt/rt-n56u/trunk/configs/templates/$config
               
         - name: 编译固件
           run: |
