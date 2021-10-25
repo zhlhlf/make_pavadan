@@ -18,7 +18,7 @@ env:
   release: true
   pack7z: true
   zip: false
-  replace: tgg
+  replace: true
 
 
 jobs:
@@ -49,7 +49,7 @@ jobs:
           if: env.replace == 'true'        
           run: |
               rm -rf $GITHUB_WORKSPACE/opt/rt-n56u/trunk/configs/templates/$config
-              mv $GITHUB_WORKSPACE/$config $GITHUB_WORKSPACE/opt/rt-n56u/trunk/.config
+              mv $GITHUB_WORKSPACE/$config $GITHUB_WORKSPACE/opt/rt-n56u/trunk/$config
               
         - name: 编译固件
           run: |
