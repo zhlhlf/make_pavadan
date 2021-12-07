@@ -6,3 +6,5 @@ https://github.com/hanwckf/rt-n56u
 https://github.com/bkye/rt-n56u
 
 https://github.com/coolsnowwolf/lede
+
+https://github.com/gorden5566/padavan
