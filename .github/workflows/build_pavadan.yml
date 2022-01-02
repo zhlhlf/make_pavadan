@@ -10,7 +10,7 @@ on:
    
 env:
   repo_url: https://github.com/hanwckf/rt-n56u
-  repo_branch: v2020-11-27 # master
+  repo_branch: v2019-03-07 # master
   repo_os: pavanda
   config: PSG1218.config
   model: PSG1218
