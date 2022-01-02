@@ -10,6 +10,7 @@ on:
    
 env:
   repo_url: https://github.com/hanwckf/rt-n56u
+  repo_branch: v2018-12-31 #master
   repo_os: pavanda
   config: PSG1218.config
   model: PSG1218
@@ -41,7 +42,7 @@ jobs:
         - name: 获取源码
           run: |
               ls
-              git clone --depth=1 $repo_url opt/rt-n56u
+              git clone --depth 1 $repo_url -b $repo_branch opt/rt-n56u
               cd $GITHUB_WORKSPACE/opt/rt-n56u/toolchain-mipsel
               sh dl_toolchain.sh
 
