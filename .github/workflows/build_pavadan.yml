@@ -13,7 +13,7 @@ env:
   repo_branch: master
   repo_os: pavanda
   config: PSG1218.config
-  model: PSG1218
+  model: HC5861
   TZ: Asia/Shanghai
   wetransfer: false
   release: true
