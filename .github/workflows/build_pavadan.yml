@@ -68,5 +68,5 @@ jobs:
         - name: Upload artifact
           uses: actions/upload-artifact@master
           with:
-           name: pavadan phicomm k2
+           name: pavadan
            path: zhlhlf/
