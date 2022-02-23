@@ -19,8 +19,8 @@ env:
   release: true
   pack7z: true
   zip: false
-  ssh: true
-  make: true666
+  ssh: true66
+  make: true
   replace: true66
 
 
