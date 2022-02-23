@@ -9,11 +9,11 @@ on:
 #    branches: [ master ]
    
 env:
-  repo_url: https://bitbucket.org/padavan/rt-n56u/src
+  repo_url: https://github.com/zhlhlf/rt-n56u
   repo_branch: master
   repo_os: pavanda
   config: PSG1218.config
-  model: ac1200hp_base
+  model: HC5861
   TZ: Asia/Shanghai
   wetransfer: false
   release: true
