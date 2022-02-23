@@ -12,13 +12,9 @@ env:
   repo_url: https://github.com/zhlhlf/rt-n56u
   repo_branch: master
   repo_os: pavanda
-  config: PSG1218.config
+  config: HC5861.config
   model: HC5861
   TZ: Asia/Shanghai
-  wetransfer: false
-  release: true
-  pack7z: true
-  zip: false
   ssh: true66
   make: true
   replace: true66
@@ -62,7 +58,6 @@ jobs:
           env:
             TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
             TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}      
-
               
         - name: 编译固件
           if: env.make == 'true'                    
