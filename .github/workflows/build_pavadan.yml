@@ -51,6 +51,8 @@ jobs:
               mv $GITHUB_WORKSPACE/$config $GITHUB_WORKSPACE/opt/rt-n56u/trunk/configs/templates/$config
               ls $GITHUB_WORKSPACE/opt/rt-n56u/trunk/configs/templates/
               chmod 777 $GITHUB_WORKSPACE/opt/rt-n56u/trunk/configs/templates/$config
+              chmod 777 $GITHUB_WORKSPACE/opt/rt-n56u/trunk/configs/boards/HC5861/*
+              
 
         - name: ssh连接
           if: env.ssh == 'true'            
