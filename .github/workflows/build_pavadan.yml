@@ -17,7 +17,7 @@ env:
   TZ: Asia/Shanghai
   ssh: true66
   make: true
-  replace: true66
+  replace: true
 
 
 jobs:
