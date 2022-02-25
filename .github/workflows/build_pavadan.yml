@@ -15,7 +15,7 @@ env:
   config: HC5861.config
   model: RT-AC1200HP
   TZ: Asia/Shanghai
-  ssh: true
+  ssh: true6
   make: true
   replace: true6
 
