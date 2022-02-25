@@ -16,7 +16,7 @@ env:
   model: RT-AC1200HP
   TZ: Asia/Shanghai
   ssh: true
-  make: true6
+  make: true
   replace: true6
 
 
