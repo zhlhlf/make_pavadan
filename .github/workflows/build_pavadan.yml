@@ -9,15 +9,15 @@ on:
 #    branches: [ master ]
    
 env:
-  repo_url: https://bitbucket.org/padavan/rt-n56u/src
+  repo_url: https://zhlhlf/padavan/rt-n56u
   repo_branch: master
   repo_os: pavanda
   config: HC5861.config
-  model: RT-AC1200HP
+  model: HC5861
   TZ: Asia/Shanghai
   ssh: true6
   make: true
-  replace: true6
+  replace: true
 
 
 jobs:
@@ -42,7 +42,7 @@ jobs:
               ls
               git clone --recurse-submodules $repo_url -b $repo_branch opt/rt-n56u
               cd $GITHUB_WORKSPACE/opt/rt-n56u/toolchain-mipsel
-#              sh dl_toolchain.sh
+              sh dl_toolchain.sh
 
         - name: 替换config
           if: env.replace == 'true'        
@@ -62,7 +62,7 @@ jobs:
           if: env.make == 'true'                    
           run: |
               cd $GITHUB_WORKSPACE/opt/rt-n56u/trunk
-              fakeroot ./build_firmware $model  # 脚本第一个参数为路由型号，在trunk/configs/templates/中    # 编译好的固件在trunk/images里
+              fakeroot ./build_firmware_modify $model  # 脚本第一个参数为路由型号，在trunk/configs/templates/中    # 编译好的固件在trunk/images里
              
         - name: 移动生成至zhlhlf目录
           run: |
