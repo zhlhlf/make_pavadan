@@ -42,7 +42,7 @@ jobs:
               ls
               git clone --recurse-submodules $repo_url -b $repo_branch opt/rt-n56u
               cd $GITHUB_WORKSPACE/opt/rt-n56u/toolchain-mipsel
-              sh dl_toolchain.sh
+#              sh dl_toolchain.sh
 
         - name: 替换config
           if: env.replace == 'true'        
