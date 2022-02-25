@@ -9,11 +9,11 @@ on:
 #    branches: [ master ]
    
 env:
-  repo_url: https://github.com/zhlhlf/rt-n56u
+  repo_url: https://bitbucket.org/padavan/rt-n56u/src
   repo_branch: master
   repo_os: pavanda
   config: HC5861.config
-  model: HC5861
+  model: ac1200hp_base
   TZ: Asia/Shanghai
   ssh: true
   make: true6
