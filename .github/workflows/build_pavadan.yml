@@ -62,7 +62,7 @@ jobs:
           if: env.make == 'true'                    
           run: |
               cd $GITHUB_WORKSPACE/opt/rt-n56u/trunk
-              fakeroot ./build_firmware_modify $model  # 脚本第一个参数为路由型号，在trunk/configs/templates/中    # 编译好的固件在trunk/images里
+              fakeroot ./build_firmware $model  # 脚本第一个参数为路由型号，在trunk/configs/templates/中    # 编译好的固件在trunk/images里
              
         - name: 移动生成至zhlhlf目录
           run: |
@@ -75,3 +75,4 @@ jobs:
           with:
            name: pavadan
            path: zhlhlf/
+|
