@@ -13,7 +13,7 @@ env:
   repo_branch: master
   repo_os: pavanda
   config: HC5861.config
-  model: HC5861
+  model: RT-AC1200HP
   TZ: Asia/Shanghai
   ssh: true6
   make: true
