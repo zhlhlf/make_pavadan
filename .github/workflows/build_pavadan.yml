@@ -15,7 +15,7 @@ env:
   config: HC5861.config
   model: HC5861
   TZ: Asia/Shanghai
-  make: true6
+  make: true
   replace: true6
 
 
