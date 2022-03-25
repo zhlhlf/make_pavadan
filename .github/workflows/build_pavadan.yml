@@ -12,7 +12,7 @@ env:
   repo_url: https://github.com/hanwckf/rt-n56u
   repo_branch: master
   repo_os: pavanda
-  model: HC5861
+  model: RT-AC1200HP
   TZ: Asia/Shanghai
 
 
