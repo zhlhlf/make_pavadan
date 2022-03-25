@@ -9,14 +9,12 @@ on:
 #    branches: [ master ]
    
 env:
-  repo_url: https://github.com/zhlhlf/rt-n56u
+  repo_url: https://github.com/chongshengB/rt-n56u
   repo_branch: master
   repo_os: pavanda
   config: HC5861.config
   model: HC5861
   TZ: Asia/Shanghai
-  make: true
-  replace: true6
 
 
 jobs:
@@ -41,21 +39,12 @@ jobs:
               ls
               git clone --recurse-submodules $repo_url -b $repo_branch opt/rt-n56u
               git clone https://github.com/zhlhlf/jczhl-package
-              mv jczhl-package/HC5861/HC5861.config opt/rt-n56u/trunk/configs/templates/HC5861.config
-              mv jczhl-package/HC5861 opt/rt-n56u/trunk/configs/boards/HC5861
-              ls opt/rt-n56u/trunk/configs/templates
+              mv jczhl-package/$model/$model.config opt/rt-n56u/trunk/configs/templates/$model.config
+              mv jczhl-package/$model opt/rt-n56u/trunk/configs/boards/$model
               cd $GITHUB_WORKSPACE/opt/rt-n56u/toolchain-mipsel
               sh dl_toolchain.sh
 
-        - name: 替换config
-          if: env.replace == 'true'        
-          run: |
-              rm -rf $GITHUB_WORKSPACE/opt/rt-n56u/trunk/configs/templates/$config
-              mv $GITHUB_WORKSPACE/$config $GITHUB_WORKSPACE/opt/rt-n56u/trunk/configs/templates/$config
-              chmod 777 $GITHUB_WORKSPACE/opt/rt-n56u/trunk/configs/templates/$config
-              
         - name: 编译固件
-          if: env.make == 'true'                    
           run: |
               cd $GITHUB_WORKSPACE/opt/rt-n56u/trunk
               fakeroot ./build_firmware_modify $model  # 脚本第一个参数为路由型号，在trunk/configs/templates/中    # 编译好的固件在trunk/images里
