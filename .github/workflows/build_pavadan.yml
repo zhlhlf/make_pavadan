@@ -13,7 +13,6 @@ env:
   repo_branch: master
   repo_os: pavanda
   model: HC5861-2
-  TZ: Asia/Shanghai
 
 
 jobs:
