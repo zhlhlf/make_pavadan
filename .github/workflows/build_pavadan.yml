@@ -9,7 +9,7 @@ on:
 #    branches: [ master ]
    
 env:
-  repo_url: https://github.com/hanwckf/rt-n56u
+  repo_url: https://github.com/chongshengB/rt-n56u
   repo_branch: master
   repo_os: pavanda
   model: HC5861-2
@@ -35,24 +35,25 @@ jobs:
           
         - name: 获取源码
           run: |
-              ls
-              git clone --recurse-submodules $repo_url -b $repo_branch opt/rt-n56u
-              git clone https://github.com/zhlhlf/jczhl-package
-              mv jczhl-package/$model/$model.config opt/rt-n56u/trunk/configs/templates/$model.config
-              mv jczhl-package/$model opt/rt-n56u/trunk/configs/boards
-              cd $GITHUB_WORKSPACE/opt/rt-n56u/toolchain-mipsel
+              cd /
+              git clone --recurse-submodules $repo_url -b $repo_branch /opt/rt-n56u
+              git clone https://github.com/zhlhlf/jczhl-package /opt/rt-n56u/jczhl-package
+              cd /opt/rt-n56u
+              mv jczhl-package/$model/$model.config /opt/rt-n56u/trunk/configs/templates/$model.config
+              mv jczhl-package/$model /opt/rt-n56u/trunk/configs/boards
+              cd /opt/rt-n56u/toolchain-mipsel
               sh dl_toolchain.sh
 
         - name: 编译固件
           run: |
-              cd $GITHUB_WORKSPACE/opt/rt-n56u/trunk
-              fakeroot ./build_firmware_modify $model  # 脚本第一个参数为路由型号，在trunk/configs/templates/中    # 编译好的固件在trunk/images里
+              cd /opt/rt-n56u/trunk
+              fakeroot ./build_firmware_modify $model
              
         - name: 移动生成至zhlhlf目录
           run: |
            mkdir zhlhlf
            rm -rf zhlhlf/*           
-           mv $GITHUB_WORKSPACE/opt/rt-n56u/trunk/images/*.trx zhlhlf         
+           mv /opt/rt-n56u/trunk/images/*.trx zhlhlf         
                               
         - name: Upload artifact
           uses: actions/upload-artifact@master
