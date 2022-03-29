@@ -36,20 +36,13 @@ jobs:
           run: |
               cd /
               git clone --recurse-submodules $repo_url -b $repo_branch /opt/rt-n56u
+              git clone https://github.com/zhlhlf/jczhl-package /opt/rt-n56u/jczhl-package
+              cd /opt/rt-n56u
+              mv jczhl-package/$model/$model.config /opt/rt-n56u/trunk/configs/templates/$model.config
+              mv jczhl-package/$model /opt/rt-n56u/trunk/configs/boards
               cd /opt/rt-n56u/toolchain-mipsel
-              cd /opt/rt-n56u/toolchain-mipsel && ./clean_sources && ./build_toolchain_3.4.x
-#              git clone https://github.com/zhlhlf/jczhl-package /opt/rt-n56u/jczhl-package
-#              cd /opt/rt-n56u
-#              mv jczhl-package/$model/$model.config /opt/rt-n56u/trunk/configs/templates/$model.config
-#              mv jczhl-package/$model /opt/rt-n56u/trunk/configs/boards
-#              cd /opt/rt-n56u/toolchain-mipsel
-#              sh dl_toolchain.sh
+              sh dl_toolchain.sh
 
-        - name: SSH connection to Actions
-          uses: P3TERX/ssh2actions@v1.0.0
-          env:
-            TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
-            TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
 
         - name: 编译固件
           run: |
