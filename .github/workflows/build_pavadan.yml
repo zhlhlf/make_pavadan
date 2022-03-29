@@ -47,9 +47,9 @@ jobs:
 
         - name: SSH connection to Actions
           uses: P3TERX/ssh2actions@v1.0.0
-           env:
-              TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
-              TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          env:
+            TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+            TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
 
         - name: 编译固件
           run: |
