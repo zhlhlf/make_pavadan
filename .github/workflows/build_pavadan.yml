@@ -9,7 +9,7 @@ on:
 #    branches: [ master ]
    
 env:
-  repo_url: https://github.com/andy-padavan/rt-n56u
+  repo_url: https://github.com/hanwckf/rt-n56u
   repo_branch: master
   repo_os: pavanda
   model: RT-AC1200HP
