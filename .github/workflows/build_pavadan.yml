@@ -9,10 +9,10 @@ on:
 #    branches: [ master ]
    
 env:
-  repo_url: https://github.com/hanwckf/rt-n56u
+  repo_url: https://github.com/chongshengB/rt-n56u
   repo_branch: master
   repo_os: pavanda
-  model: HC5861-2
+  model: YK-L1
 
 
 jobs:
@@ -36,13 +36,12 @@ jobs:
           run: |
               cd /
               git clone --recurse-submodules $repo_url -b $repo_branch /opt/rt-n56u
-              git clone https://github.com/zhlhlf/jczhl-package /opt/rt-n56u/jczhl-package
-              cd /opt/rt-n56u
-              mv jczhl-package/$model/$model.config /opt/rt-n56u/trunk/configs/templates/$model.config
-              mv jczhl-package/$model /opt/rt-n56u/trunk/configs/boards
+#              git clone https://github.com/zhlhlf/jczhl-package /opt/rt-n56u/jczhl-package
+#              cd /opt/rt-n56u
+#              mv jczhl-package/$model/$model.config /opt/rt-n56u/trunk/configs/templates/$model.config
+#              mv jczhl-package/$model /opt/rt-n56u/trunk/configs/boards
               cd /opt/rt-n56u/toolchain-mipsel
               sh dl_toolchain.sh
-
 
         - name: 编译固件
           run: |
