@@ -38,8 +38,8 @@ jobs:
               git clone --recurse-submodules $repo_url -b $repo_branch /opt/rt-n56u
               git clone https://github.com/zhlhlf/jczhl-package /opt/rt-n56u/jczhl-package
               cd /opt/rt-n56u
-              mv jczhl-package/$model/$model.config /opt/rt-n56u/trunk/configs/templates/$model.config
-              mv jczhl-package/$model /opt/rt-n56u/trunk/configs/boards
+              cp -rf jczhl-package/*/*.config /opt/rt-n56u/trunk/configs/templates
+              cp -rf jczhl-package/* /opt/rt-n56u/trunk/configs/boards
               cd /opt/rt-n56u/toolchain-mipsel
               sh dl_toolchain.sh              
 
