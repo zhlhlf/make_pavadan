@@ -10,7 +10,7 @@ on:
    
 env:
   repo_url: https://github.com/vb1980/Padavan-KVR
-  repo_branch: main
+  repo_branch: downgrade
   repo_os: pavanda
   model: HC5861
 
