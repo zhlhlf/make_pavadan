@@ -9,7 +9,7 @@ on:
 #    branches: [ master ]
    
 env:
-  repo_url: https://github.com/vb1980/Padavan-KVR
+  repo_url: https://github.com/hanwckf/padavan-4.4
   repo_branch: main
   repo_os: pavanda
   model: HC5861
