@@ -10,7 +10,7 @@ on:
    
 env:
   repo_url: https://github.com/immortalwrt/padavan
-  repo_branch: main
+  repo_branch: master
   repo_os: pavanda
   model: HC5861
 
